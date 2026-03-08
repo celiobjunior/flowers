@@ -14,6 +14,14 @@ let animationFrame = 0;
 let lastFrameTime = 0;
 let resizeTimer = 0;
 
+function toImageSrc(fileName) {
+  if (/^https?:\/\//i.test(fileName)) {
+    return fileName;
+  }
+
+  return fileName.split("/").map(encodeURIComponent).join("/");
+}
+
 function buildHeadline() {
   headline.innerHTML = "";
   let letterIndex = 0;
@@ -56,7 +64,7 @@ function buildCarousel() {
     card.className = "photo-card";
     card.style.setProperty("--tilt", tiltValues[index % tiltValues.length]);
 
-    image.src = fileName.split("/").map(encodeURIComponent).join("/");
+    image.src = toImageSrc(fileName);
     image.alt = `Foto ${index % photoFiles.length + 1}`;
     image.loading = "lazy";
     image.decoding = "async";
